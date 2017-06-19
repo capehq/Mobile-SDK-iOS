@@ -160,8 +160,8 @@ LB2AUDHackParserDelegate>{
     }
 #endif
     
-    [self registStreamProcessor:_soft_decoder];
-    [self registStreamProcessor:_hw_decoder];
+    [self registerStreamProcessor:_soft_decoder];
+    [self registerStreamProcessor:_hw_decoder];
     
     //default is inspire
     self.encoderType = H264EncoderType_DM368_inspire;
@@ -284,7 +284,7 @@ LB2AUDHackParserDelegate>{
     _glView.snapshotCallback = block;
 }
 
--(void) snapshotThumnnail:(void(^)(UIImage* snapshot))block{
+-(void) snapshotThumbnail:(void(^)(UIImage* snapshot))block{
     if (!_glView || _status.isPause || safe_resume_skip_count) {
         if (block) {
             block(nil);
@@ -574,7 +574,7 @@ LB2AUDHackParserDelegate>{
 }
 
 
--(void) registStreamProcessor:(id<VideoStreamProcessor>)processor{
+-(void) registerStreamProcessor:(id<VideoStreamProcessor>)processor{
     if (processor) {
         
         pthread_mutex_lock(&_processor_mutex);
@@ -583,13 +583,13 @@ LB2AUDHackParserDelegate>{
     }
 }
 
--(void) unregistStreamProcessor:(id)processor{
+-(void) unregisterStreamProcessor:(id)processor{
     pthread_mutex_lock(&_processor_mutex);
     [_stream_processor_list removeObject:processor];
     pthread_mutex_unlock(&_processor_mutex);
 }
 
--(void) registFrameProcessor:(id<VideoFrameProcessor>)processor{
+-(void) registerFrameProcessor:(id<VideoFrameProcessor>)processor{
     if (processor) {
         
         pthread_mutex_lock(&_processor_mutex);
@@ -598,7 +598,7 @@ LB2AUDHackParserDelegate>{
     }
 }
 
--(void) unregistFrameProcessor:(id)processor{
+-(void) unregisterFrameProcessor:(id)processor{
     
     pthread_mutex_lock(&_processor_mutex);
     [_frame_processor_list removeObject:processor];
@@ -735,7 +735,7 @@ LB2AUDHackParserDelegate>{
                     if (self.isDefaultPreviewer) {
                         //only notify if this is default previewer
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [[NSNotificationCenter defaultCenter] postNotificationName:VIDEO_PREVIEWER_EVEN_NOTIFICATIOIN
+                            [[NSNotificationCenter defaultCenter] postNotificationName:VIDEO_PREVIEWER_EVENT_NOTIFICATION
                                                                                 object:@(VideoPreviewerEventNoImage)];
                         });
                     }
@@ -748,7 +748,7 @@ LB2AUDHackParserDelegate>{
                 if (self.isDefaultPreviewer) {
                     //only notify if this is default previewer
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:VIDEO_PREVIEWER_EVEN_NOTIFICATIOIN
+                        [[NSNotificationCenter defaultCenter] postNotificationName:VIDEO_PREVIEWER_EVENT_NOTIFICATION
                                                                             object:@(VideoPreviewerEventHasImage)];
                     });
                 }
@@ -887,7 +887,7 @@ LB2AUDHackParserDelegate>{
                     if (self.isDefaultPreviewer) {
                         //only notify if this is default previewer
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [[NSNotificationCenter defaultCenter] postNotificationName:VIDEO_PREVIEWER_EVEN_NOTIFICATIOIN object:@(VideoPreviewerEventResumeReady)];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:VIDEO_PREVIEWER_EVENT_NOTIFICATION object:@(VideoPreviewerEventResumeReady)];
                         });
                     }
                 }

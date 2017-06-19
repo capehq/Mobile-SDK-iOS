@@ -21,7 +21,7 @@
 #define __WAIT_STEP_FRAME__   (0) //单步调试用，搭配test_queue_pull
 
 #define VIDEO_PREVIEWER_DISPATCH "video_preview_create_thread_dispatcher"
-#define VIDEO_PREVIEWER_EVEN_NOTIFICATIOIN @"video_preview_even_notification"
+#define VIDEO_PREVIEWER_EVENT_NOTIFICATION @"video_preview_event_notification"
 
 typedef struct{
     BOOL isInit:1;  // YES when VideoPreviewer is initialized
@@ -196,7 +196,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 @interface VideoPreviewer ()  <VideoFrameProcessor>
 
 /**
- *  enable hadeware decode
+ *  enable hardware decode
  */
 @property (assign, nonatomic) BOOL enableHardwareDecode;
 
@@ -269,7 +269,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /**
  *  Screen capture thumbnail
  */
--(void) snapshotThumnnail:(void(^)(UIImage* snapshot))block;
+-(void) snapshotThumbnail:(void(^)(UIImage* snapshot))block;
 
 @end
 
@@ -280,22 +280,22 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /**
  *  @param processor Processor registered to receive the H264 stream data.
  */
--(void) registStreamProcessor:(id<VideoStreamProcessor>)processor;
+-(void) registerStreamProcessor:(id<VideoStreamProcessor>)processor;
 
 /**
  *  @param processor Remove registered processor list.
  */
--(void) unregistStreamProcessor:(id)processor;
+-(void) unregisterStreamProcessor:(id)processor;
 
 /*
  *  @param processor Processor registered to receive the VideoFrameYUV frame data.
  */
--(void) registFrameProcessor:(id<VideoFrameProcessor>)processor;
+-(void) registerFrameProcessor:(id<VideoFrameProcessor>)processor;
 
 /**
  *  @param processor Remove registered processor list.
  */
--(void) unregistFrameProcessor:(id)processor;
+-(void) unregisterFrameProcessor:(id)processor;
 
 @end
 

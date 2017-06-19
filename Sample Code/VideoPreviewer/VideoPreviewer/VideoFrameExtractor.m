@@ -16,7 +16,7 @@
 @interface VideoFrameExtractor (){
     AVCodecContext *_pCodecCtx; //decode
     AVFrame *_pFrame;   //frame
-    AVCodecParserContext *_pCodecPaser;
+    AVCodecParserContext *_pCodecParser;
     
     uint32_t s_frameUuidCounter;
     VideoFrameH264Raw* _frameInfoList;
@@ -164,39 +164,39 @@ ss += ll; \
     if(_pCodecCtx == NULL) return;
     
     
-    int paserLength_In = length;
-    int paserLen;
-    uint8_t *paserBuffer_In = buf;
-    while (paserLength_In > 0) {
+    int parserLength_In = length;
+    int parserLen;
+    uint8_t *parserBuffer_In = buf;
+    while (parserLength_In > 0) {
         AVPacket packet;
         av_init_packet(&packet);
-        paserLen = av_parser_parse2(_pCodecPaser, _pCodecCtx, &packet.data, &packet.size, paserBuffer_In, paserLength_In, AV_NOPTS_VALUE, AV_NOPTS_VALUE, AV_NOPTS_VALUE);
-        paserLength_In -= paserLen;
-        paserBuffer_In += paserLen;
+        parserLen = av_parser_parse2(_pCodecParser, _pCodecCtx, &packet.data, &packet.size, parserBuffer_In, parserLength_In, AV_NOPTS_VALUE, AV_NOPTS_VALUE, AV_NOPTS_VALUE);
+        parserLength_In -= parserLen;
+        parserBuffer_In += parserLen;
         
         if (packet.size > 0) {
             bool isSpsPpsFound = false;
             //int rate = getVideFrameRateWH(packet.data, packet.size, &isSpsPpsFound, &_outputWidth, &_outputHeight);
             
-            if(_pCodecPaser->height_in_pixel == 1088){
+            if(_pCodecParser->height_in_pixel == 1088){
                 //1080p hack
-                _pCodecPaser->height_in_pixel = 1080;
+                _pCodecParser->height_in_pixel = 1080;
             }
             
-            _outputWidth = _pCodecPaser->width_in_pixel;
-            _outputHeight = _pCodecPaser->height_in_pixel;
-            isSpsPpsFound = _pCodecPaser->frame_has_sps?YES:NO;
+            _outputWidth = _pCodecParser->width_in_pixel;
+            _outputHeight = _pCodecParser->height_in_pixel;
+            isSpsPpsFound = _pCodecParser->frame_has_sps?YES:NO;
             
             if (isSpsPpsFound) {
-                if (_frameInfoListCount != _pCodecPaser->max_frame_num_plus1) {
+                if (_frameInfoListCount != _pCodecParser->max_frame_num_plus1) {
                     //recreate frame info list
                     if (_frameInfoList) {
                         free(_frameInfoList);
                         _frameInfoList = nil;
                     }
                     
-                    if (_pCodecPaser->max_frame_num_plus1) {
-                        _frameInfoListCount = _pCodecPaser->max_frame_num_plus1;
+                    if (_pCodecParser->max_frame_num_plus1) {
+                        _frameInfoListCount = _pCodecParser->max_frame_num_plus1;
                         _frameInfoList = malloc(sizeof(VideoFrameH264Raw)*_frameInfoListCount);
                         memset(_frameInfoList, 0, _frameInfoListCount*sizeof(VideoFrameH264Raw));
                     }
@@ -204,11 +204,11 @@ ss += ll; \
             }
             
             int rate = 0;
-            if (_pCodecPaser->frame_rate_den) {
+            if (_pCodecParser->frame_rate_den) {
                 // If the stream is encoded by DJI's encoder, the frame rate
                 // should be double of the value from the parser.
                 double scale = _usingDJIAircraftEncoder?2.0:1.0;
-                rate = (int)(0.5+_pCodecPaser->frame_rate_num/(scale*_pCodecPaser->frame_rate_den));
+                rate = (int)(0.5+_pCodecParser->frame_rate_num/(scale*_pCodecParser->frame_rate_den));
                 _frameRate = rate;
             }
             
@@ -272,30 +272,30 @@ ss += ll; \
         outputFrame->frame_size = frame->size;
         
         { //patch by amanda
-            outputFrame->frame_info.frame_index = _pCodecPaser->frame_num;
-            outputFrame->frame_info.max_frame_index_plus_one = _pCodecPaser->max_frame_num_plus1;
+            outputFrame->frame_info.frame_index = _pCodecParser->frame_num;
+            outputFrame->frame_info.max_frame_index_plus_one = _pCodecParser->max_frame_num_plus1;
             
             if (outputFrame->frame_info.frame_index >= outputFrame->frame_info.max_frame_index_plus_one) {
                 // something wrong;
             }
             
-            if(_pCodecPaser->height_in_pixel == 1088){
+            if(_pCodecParser->height_in_pixel == 1088){
                 //1080p hack
-                _pCodecPaser->height_in_pixel = 1080;
+                _pCodecParser->height_in_pixel = 1080;
             }
             
-            outputFrame->frame_info.width = _pCodecPaser->width_in_pixel;
-            outputFrame->frame_info.height = _pCodecPaser->height_in_pixel;
+            outputFrame->frame_info.width = _pCodecParser->width_in_pixel;
+            outputFrame->frame_info.height = _pCodecParser->height_in_pixel;
             
-            if (_pCodecPaser->frame_rate_den) {
+            if (_pCodecParser->frame_rate_den) {
                 // If the stream is encoded by DJI's encoder, the frame rate
                 // should be double of the value from the parser. 
                 double scale = _usingDJIAircraftEncoder?2.0:1.0;
-                outputFrame->frame_info.fps = ceil(_pCodecPaser->frame_rate_num/(scale*_pCodecPaser->frame_rate_den));
+                outputFrame->frame_info.fps = ceil(_pCodecParser->frame_rate_num/(scale*_pCodecParser->frame_rate_den));
             }
-            outputFrame->frame_info.frame_flag.has_sps = _pCodecPaser->frame_has_sps;
-            outputFrame->frame_info.frame_flag.has_pps = _pCodecPaser->frame_has_pps;
-            outputFrame->frame_info.frame_flag.has_idr = (_pCodecPaser->key_frame ==1)?1:0;
+            outputFrame->frame_info.frame_flag.has_sps = _pCodecParser->frame_has_sps;
+            outputFrame->frame_info.frame_flag.has_pps = _pCodecParser->frame_has_pps;
+            outputFrame->frame_info.frame_flag.has_idr = (_pCodecParser->key_frame ==1)?1:0;
             outputFrame->frame_info.frame_flag.is_fullrange = NO; //we can only get this in sps, set this bit later
         }
         
@@ -374,17 +374,17 @@ ss += ll; \
     @synchronized (self)
     {
         if(_pCodecCtx == NULL) return false;
-        int paserLength_In = length;
-        int paserLen;
+        int parserLength_In = length;
+        int parserLen;
         int decode_data_length;
         int got_picture = 0;
-        uint8_t *paserBuffer_In = buf;
-        while (paserLength_In > 0) {
+        uint8_t *parserBuffer_In = buf;
+        while (parserLength_In > 0) {
             AVPacket packet;
             av_init_packet(&packet);
-            paserLen = av_parser_parse2(_pCodecPaser, _pCodecCtx, &packet.data, &packet.size, paserBuffer_In, paserLength_In, AV_NOPTS_VALUE, AV_NOPTS_VALUE, AV_NOPTS_VALUE);
-            paserLength_In -= paserLen;
-            paserBuffer_In += paserLen;
+            parserLen = av_parser_parse2(_pCodecParser, _pCodecCtx, &packet.data, &packet.size, parserBuffer_In, parserLength_In, AV_NOPTS_VALUE, AV_NOPTS_VALUE, AV_NOPTS_VALUE);
+            parserLength_In -= parserLen;
+            parserBuffer_In += parserLen;
             
             if (packet.size > 0) {
                 if(_delegate!=nil && [_delegate respondsToSelector:@selector(processVideoData:length:)]){
@@ -442,9 +442,9 @@ ss += ll; \
         pCodec = avcodec_find_decoder(AV_CODEC_ID_H264);
         _pCodecCtx = avcodec_alloc_context3(pCodec);
         _pFrame = av_frame_alloc();
-        _pCodecPaser = av_parser_init(AV_CODEC_ID_H264);
-        if (_pCodecPaser == NULL) {
-            // NSLog(@"Can't find H264 frame paser!");
+        _pCodecParser = av_parser_init(AV_CODEC_ID_H264);
+        if (_pCodecParser == NULL) {
+            // NSLog(@"Can't find H264 frame parser!");
         }
         _pCodecCtx->flags2|=CODEC_FLAG2_FAST;
         _pCodecCtx->thread_count = 2;
@@ -477,10 +477,10 @@ ss += ll; \
             av_free(_pCodecCtx);
             _pCodecCtx = NULL;
         }
-        if (_pCodecPaser) {
-            av_parser_close(_pCodecPaser);
+        if (_pCodecParser) {
+            av_parser_close(_pCodecParser);
             av_free(_pCodecCtx);
-            _pCodecPaser = NULL;
+            _pCodecParser = NULL;
         }
         
         if (_frameInfoList) {
