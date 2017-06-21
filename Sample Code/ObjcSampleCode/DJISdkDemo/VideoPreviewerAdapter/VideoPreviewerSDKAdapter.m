@@ -4,12 +4,14 @@
 //
 //  Copyright © 2016 DJI. All rights reserved.
 //
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 #import "VideoPreviewerSDKAdapter.h"
 #import "VideoPreviewerSDKAdapter+Lightbridge2.h"
 #import <VideoPreviewer/VideoPreviewer.h>
 
 #import <DJISDK/DJISDK.h>
+#pragma clang diagnostic pop
 
 #define weakSelf(__TARGET__) __weak typeof(self) __TARGET__=self
 #define weakReturn(__TARGET__) if(__TARGET__==nil)return;
@@ -368,6 +370,7 @@ const static NSTimeInterval REFRESH_INTERVAL = 1.0;
 
 #pragma mark video delegate
 -(void)videoFeed:(DJIVideoFeed *)videoFeed didUpdateVideoData:(NSData *)videoData {
+
     if (videoFeed != self.videoFeed) {
         NSLog(@"ERROR: Wrong video feed update is received!");
     }

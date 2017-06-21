@@ -1060,7 +1060,14 @@ LB2AUDHackParserDelegate>{
             CGSize size = CVImageBufferGetDisplaySize(image);
             if(kCVReturnSuccess != CVPixelBufferLockBaseAddress(image, 0))
                 return;
-            
+
+            // -----------------------Cape added-----------------------
+            // With updated video previewer, this else case is now called.
+            if (self.delegate) {
+                [self.delegate didReceiveDecompressedFrame:image]; // Causes crash in webRTC with XT. Works with X3 but super janky video.
+            }
+            // --------------------------------------------------------
+
             VideoFrameYUV yuvImage = {0};
             yuvImage.luma = CVPixelBufferGetBaseAddressOfPlane(image, 0);
             yuvImage.chromaB = CVPixelBufferGetBaseAddressOfPlane(image, 1);
@@ -1089,6 +1096,13 @@ LB2AUDHackParserDelegate>{
                  CGSize size = CVImageBufferGetDisplaySize(image);
                  if(kCVReturnSuccess != CVPixelBufferLockBaseAddress(image, 0))
                      return;
+
+                 // -----------------------Cape added-----------------------
+                 // With updated video previewer, this else case is now called.
+                 if (self.delegate) {
+                     [self.delegate didReceiveDecompressedFrame:image]; // Causes crash in webRTC with XT. Works with X3 but super janky video.
+                 }
+                 // --------------------------------------------------------
 
                  VideoFrameYUV yuvImage = {0};
                  yuvImage.luma = CVPixelBufferGetBaseAddressOfPlane(image, 0);
@@ -1340,5 +1354,13 @@ static NSThread* g_pack_pull_test_thread;
         }
     }
 }
+
+// -----------------------Cape added-----------------------
+-(void) setDelegate:(id<DecompressedFrameDelegate>)delegate
+{
+    _delegate = delegate;
+    self.soft_decoder.delegate = delegate;
+}
+// --------------------------------------------------------
 
 @end
