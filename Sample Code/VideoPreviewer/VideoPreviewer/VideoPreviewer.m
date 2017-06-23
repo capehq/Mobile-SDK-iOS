@@ -1062,10 +1062,7 @@ LB2AUDHackParserDelegate>{
                 return;
 
             // -----------------------Cape added-----------------------
-            // With updated video previewer, this else case is now called.
-            if (self.delegate) {
-                [self.delegate didReceiveDecompressedFrame:image]; // Causes crash in webRTC with XT. Works with X3 but super janky video.
-            }
+            [self.delegate didReceiveDecompressedFrame:image];
             // --------------------------------------------------------
 
             VideoFrameYUV yuvImage = {0};
@@ -1098,10 +1095,8 @@ LB2AUDHackParserDelegate>{
                      return;
 
                  // -----------------------Cape added-----------------------
-                 // With updated video previewer, this else case is now called.
-                 if (self.delegate) {
-                     [self.delegate didReceiveDecompressedFrame:image]; // Causes crash in webRTC with XT. Works with X3 but super janky video.
-                 }
+                 // FIXME: Causes crash in webRTC with XT. Works with X3 but super janky video.
+                 [self.delegate didReceiveDecompressedFrame:image];
                  // --------------------------------------------------------
 
                  VideoFrameYUV yuvImage = {0};
