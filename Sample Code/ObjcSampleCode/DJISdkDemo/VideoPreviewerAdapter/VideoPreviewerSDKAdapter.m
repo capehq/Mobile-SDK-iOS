@@ -164,10 +164,10 @@ const static NSTimeInterval REFRESH_INTERVAL = 1.0;
         [camera getOrientationWithCompletion:^(DJICameraOrientation orientation, NSError * _Nullable error) {
             if (error == nil) {
                 if (orientation == DJICameraOrientationLandscape) {
-                    [VideoPreviewer instance].rotation = VideoStreamRotationDefault;
+                    self.videoPreviewer.rotation = VideoStreamRotationDefault;
                 }
                 else {
-                    [VideoPreviewer instance].rotation = VideoStreamRotationCW90;
+                    self.videoPreviewer.rotation = VideoStreamRotationCW90;
                 }
             }
         }];
