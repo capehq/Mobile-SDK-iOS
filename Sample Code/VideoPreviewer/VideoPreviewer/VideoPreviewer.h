@@ -10,6 +10,8 @@
 #import "VideoFrameExtractor.h"
 #import "MovieGLView.h"
 #import "H264VTDecode.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 #import "DJIVideoHelper.h"
 #import "SoftwareDecodeProcessor.h"
 #import "VideoPreviewerQueue.h"
@@ -17,6 +19,7 @@
 #import "DJIVideoPresentViewAdjustHelper.h"
 #import "DJIVTH264DecoderIFrameData.h"
 #import "DJIRTPlayerRenderView.h"
+#pragma clang diagnostic pop
 
 #define __WAIT_STEP_FRAME__   (0) //单步调试用，搭配test_queue_pull
 
@@ -349,5 +352,9 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
  * @default 0
  */
 @property(readwrite, nonatomic) CGFloat highlightsDecrease;
+
+// -----------------------Cape added-----------------------
+@property(weak, nonatomic) id<DecompressedFrameDelegate> delegate;
+// -----------------------Cape added-----------------------
 
 @end

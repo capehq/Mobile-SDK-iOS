@@ -61,7 +61,17 @@
             [weakself.frameProcessor videoProcessFrame:_renderYUVFrame[_decodeFrameIndex]];
             
             _decodeFrameIndex = (++_decodeFrameIndex)%RENDER_FRAME_NUMBER;
-            
+
+            // -----------------------Cape added-----------------------
+            CVImageBufferRef image = [weakself.extractor getCVImage];
+            if (image) {
+                if (self.delegate) {
+                    [self.delegate didReceiveDecompressedFrame:image];
+                }
+            }
+            CFRelease(image); // Takes care of memory leak.
+            // --------------------------------------------------------
+
         }else{
             decodeSuccess = NO;
         }

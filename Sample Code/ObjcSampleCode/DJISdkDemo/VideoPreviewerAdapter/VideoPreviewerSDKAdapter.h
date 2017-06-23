@@ -6,21 +6,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 #import <DJISDK/DJISDK.h>
+#pragma clang diagnostic pop
 
 @class VideoPreviewer;
 
 @interface VideoPreviewerSDKAdapter : NSObject <DJIVideoFeedSourceListener, DJIVideoFeedListener>
 
-+(instancetype)adapterWithDefaultSettings;
++(instancetype _Nonnull )adapterWithDefaultSettings;
 
-+(instancetype)adapterWithForLightbridge2; 
++(instancetype _Nonnull )adapterWithForLightbridge2; 
 
-+(instancetype)adapterWithVideoPreviewer:(VideoPreviewer *)videoPreviewer andVideoFeed:(DJIVideoFeed *)videoFeed;
++(instancetype _Nonnull )adapterWithVideoPreviewer:(VideoPreviewer *_Nullable)videoPreviewer andVideoFeed:(DJIVideoFeed *_Nullable)videoFeed;
 
-@property (nonatomic, weak) VideoPreviewer *videoPreviewer;
+@property (nonatomic, weak) VideoPreviewer * _Nullable videoPreviewer;
 
-@property (nonatomic, weak) DJIVideoFeed *videoFeed;
+@property (nonatomic, weak) DJIVideoFeed * _Nullable videoFeed;
 
 -(void)start;
 

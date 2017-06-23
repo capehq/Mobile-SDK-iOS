@@ -7,9 +7,12 @@
 
 #import "VideoPreviewerSDKAdapter+Lightbridge2.h"
 #import "DemoUtilityMacro.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
 #import <DJISDK/DJISDK.h>
 #import <VideoPreviewer/VideoPreviewer.h>
 #import "DemoComponentHelper.h"
+#pragma clang diagnostic pop
 
 #define IS_FLOAT_EQUAL(a, b) (fabs(a - b) < 0.0005)
 

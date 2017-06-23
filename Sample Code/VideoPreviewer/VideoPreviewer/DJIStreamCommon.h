@@ -199,3 +199,8 @@ typedef NS_ENUM(NSUInteger, VideoPresentContentMode){
 -(void) videoProcessFrame:(VideoFrameYUV*)frame;
 -(void) videoProcessFailedFrame;
 @end
+
+@protocol DecompressedFrameDelegate <NSObject>
+@required
+- (void)didReceiveDecompressedFrame:(CVImageBufferRef)image;
+@end

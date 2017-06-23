@@ -12,5 +12,9 @@
 @property (nonatomic, weak) id<VideoFrameProcessor> frameProcessor;
 @property (nonatomic, assign) BOOL enabled;
 
+// -----------------------Cape added-----------------------
+@property (nonatomic, weak) id<DecompressedFrameDelegate> delegate;
+// --------------------------------------------------------
+
 -(id) initWithExtractor:(VideoFrameExtractor*)extractor;
 @end
