@@ -12,6 +12,7 @@
 #include <OpenGLES/ES2/gl.h>
 #import "LB2AUDHackParser.h"
 #import "VideoPreviewerMacros.h"
+#include <libavutil/log.h>
 
 //#import "DJIDataDumper.h"
 //#import "DJIH264FrameRawLayerDumper.h"
@@ -169,6 +170,8 @@ LB2AUDHackParserDelegate>{
     //lb2 hack
     self.lb2Hack = [[LB2AUDHackParser alloc] init];
     self.lb2Hack.delegate = self;
+
+    av_log_set_level(AV_LOG_FATAL);
 
     return self;
 }

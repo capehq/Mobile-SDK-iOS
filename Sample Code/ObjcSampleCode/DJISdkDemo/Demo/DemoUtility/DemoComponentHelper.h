@@ -6,10 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdocumentation"
 #import <DJISDK/DJISDK.h>
-#pragma clang diagnostic pop
 
 @class DJIBaseProduct;
 @class DJIAircraft;

@@ -8,11 +8,8 @@
  *  It is recommended that user should not cache any instances of DJIBaseProduct (including DJIAircraft and DJIHandheld) and any instances
  *  of DJIBaseComponent (e.g. DJICamera). Therefore, a set of helper methods is provided to access the product and components.
  */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdocumentation"
 #import <DJISDK/DJISDK.h>
 #import "DemoComponentHelper.h"
-#pragma clang diagnostic pop
 
 @implementation DemoComponentHelper
 
