@@ -26,4 +26,6 @@
 
 -(void)stop;
 
+-(void)setIsForLightbridge2;
+
 @end
