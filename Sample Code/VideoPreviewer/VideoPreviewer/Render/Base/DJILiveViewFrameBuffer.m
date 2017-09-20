@@ -297,7 +297,7 @@ void dji_dataProviderUnlockCallback (void *info, const void *data, size_t size)
     GLubyte *rawImagePixels;
     
     CGDataProviderRef dataProvider = NULL;
-    if (false)//[DJILiveViewRenderContext supportsFastTextureUpload])
+    if (/* DISABLES CODE */ (false))//[DJILiveViewRenderContext supportsFastTextureUpload])
     {
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
         NSUInteger paddedWidthOfImage = CVPixelBufferGetBytesPerRow(renderTarget) / 4.0;
@@ -321,7 +321,7 @@ void dji_dataProviderUnlockCallback (void *info, const void *data, size_t size)
     
     CGColorSpaceRef defaultRGBColorSpace = CGColorSpaceCreateDeviceRGB();
     
-    if (false)
+    if (/* DISABLES CODE */ (false))
     {
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
         cgImageFromBytes = CGImageCreate((int)_size.width, (int)_size.height, 8, 32, CVPixelBufferGetBytesPerRow(renderTarget), defaultRGBColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipFirst, dataProvider, NULL, NO, kCGRenderingIntentDefault);
