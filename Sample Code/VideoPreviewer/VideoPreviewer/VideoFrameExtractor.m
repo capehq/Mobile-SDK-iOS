@@ -498,7 +498,7 @@ ss += ll; \
         if(_pFrame == NULL)
         {
             [self setupExtractor];
-            NSLog(@"Frame Extractor Init param:%d %d %d %d %d",_pCodecCtx->ticks_per_frame,_pCodecCtx->delay,_pCodecCtx->thread_count,_pCodecCtx->thread_type,_pCodecCtx->active_thread_type);
+//            NSLog(@"Frame Extractor Init param:%d %d %d %d %d",_pCodecCtx->ticks_per_frame,_pCodecCtx->delay,_pCodecCtx->thread_count,_pCodecCtx->thread_type,_pCodecCtx->active_thread_type);
 
         }
     }

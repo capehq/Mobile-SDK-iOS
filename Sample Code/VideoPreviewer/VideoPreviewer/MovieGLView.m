@@ -279,7 +279,7 @@ NSString *const renderToScreenFS = SHADER_STRING
     }else{
         _targetLayerFrame          = adjustFrame;
         __weak typeof(self) target = self;
-        void(^adjustFrameFunc)() = ^{
+        void(^adjustFrameFunc)(void) = ^{
             [target setFrame:adjustFrame];
             [target notifyFrameChange];
         };

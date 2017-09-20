@@ -24,7 +24,7 @@ typedef struct DJILiveViewRenderTextureOptions {
     GLenum type;
 } DJILiveViewRenderTextureOptions;
 
-DJILiveViewRenderTextureOptions defaultOptionsForTexture();
+DJILiveViewRenderTextureOptions defaultOptionsForTexture(void);
 
 @interface DJILiveViewFrameBuffer : NSObject
 
