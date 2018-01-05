@@ -39,6 +39,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self updateUI];
 }
 
@@ -98,7 +99,9 @@
         self.aircraftBindingState == DJIAppActivationAircraftBindingStateUnbound ||
         self.aircraftBindingState == DJIAppActivationAircraftBindingStateUnboundButCannotSync) {
         if (!self.isShown && !self.isLoggingIn) {
-            [self.navController pushViewController:self animated:YES];
+            if(![self.navigationController.topViewController isKindOfClass:[AppActivationViewController class]]) {
+                [self.navController pushViewController:self animated:YES];
+            }
         }
     }
     else {
