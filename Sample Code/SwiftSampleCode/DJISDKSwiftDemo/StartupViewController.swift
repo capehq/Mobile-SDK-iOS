@@ -45,6 +45,16 @@ class StartupViewController: UIViewController {
                     }
                 }
             })
+            DJISDKManager.keyManager()?.getValueFor(connectedKey, withCompletion: { (value:DJIKeyedValue?, error:Error?) in
+                if let unwrappedValue = value {
+                    if unwrappedValue.boolValue {
+                        // UI goes on MT.
+                        DispatchQueue.main.async {
+                            self.productConnected()
+                        }
+                    }
+                }
+            })
         }
     }
     

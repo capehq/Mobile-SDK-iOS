@@ -21,6 +21,7 @@ enum TimelineElementKind: String {
     case recordVideoStop = "Stop Record"
     case waypointMission = "Waypoint Mission"
     case hotpointMission = "Hotpoint Mission"
+    case aircraftYaw = "Aircraft Yaw"
 }
 
 class TimelineMissionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MKMapViewDelegate {
@@ -62,7 +63,7 @@ class TimelineMissionViewController: UIViewController, UICollectionViewDelegate,
         self.timelineView.delegate = self
         self.timelineView.dataSource = self
         
-        self.availableElements.append(contentsOf: [.takeOff, .goTo, .goHome, .gimbalAttitude, .singleShootPhoto, .continuousShootPhoto, .recordVideoDuration, .recordVideoStart, .recordVideoStop, .waypointMission, .hotpointMission])
+        self.availableElements.append(contentsOf: [.takeOff, .goTo, .goHome, .gimbalAttitude, .singleShootPhoto, .continuousShootPhoto, .recordVideoDuration, .recordVideoStart, .recordVideoStop, .waypointMission, .hotpointMission, .aircraftYaw])
         
         self.mapView.delegate = self
         
@@ -314,28 +315,30 @@ class TimelineMissionViewController: UIViewController, UICollectionViewDelegate,
     
     func timelineElementForKind(kind: TimelineElementKind) -> DJIMissionControlTimelineElement? {
         switch kind {
-        case .takeOff:
-            return DJITakeOffAction()
-        case .goTo:
-            return DJIGoToAction(altitude: 30)
-        case .goHome:
-            return DJIGoHomeAction()
-        case .gimbalAttitude:
-            return self.defaultGimbalAttitudeAction()
-        case .singleShootPhoto:
-            return DJIShootPhotoAction(singleShootPhoto: ())
-        case .continuousShootPhoto:
-            return DJIShootPhotoAction(photoCount: 10, timeInterval: 3.0)
-        case .recordVideoDuration:
-            return DJIRecordVideoAction(duration: 10)
-        case .recordVideoStart:
-            return DJIRecordVideoAction(startRecordVideo: ())
-        case .recordVideoStop:
-            return DJIRecordVideoAction(stopRecordVideo: ())
-        case .waypointMission:
-            return self.defaultWaypointMission()
-        case .hotpointMission:
-            return self.defaultHotPointAction()
+            case .takeOff:
+                return DJITakeOffAction()
+            case .goTo:
+                return DJIGoToAction(altitude: 30)
+            case .goHome:
+                return DJIGoHomeAction()
+            case .gimbalAttitude:
+                return self.defaultGimbalAttitudeAction()
+            case .singleShootPhoto:
+                return DJIShootPhotoAction(singleShootPhoto: ())
+            case .continuousShootPhoto:
+                return DJIShootPhotoAction(photoCount: 10, timeInterval: 3.0)
+            case .recordVideoDuration:
+                return DJIRecordVideoAction(duration: 10)
+            case .recordVideoStart:
+                return DJIRecordVideoAction(startRecordVideo: ())
+            case .recordVideoStop:
+                return DJIRecordVideoAction(stopRecordVideo: ())
+            case .waypointMission:
+                return self.defaultWaypointMission()
+            case .hotpointMission:
+                return self.defaultHotPointAction()
+            case .aircraftYaw:
+                return DJIAircraftYawAction(relativeAngle: 36, andAngularVelocity: 30)
         }
     }
     
