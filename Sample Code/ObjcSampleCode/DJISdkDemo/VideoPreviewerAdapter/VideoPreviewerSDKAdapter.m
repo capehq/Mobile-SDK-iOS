@@ -391,8 +391,10 @@ const static NSTimeInterval REFRESH_INTERVAL = 1.0;
             return;
         }
         else {
-            [self updateEncodeType];
-            [self updateContentRect];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self updateEncodeType];
+                [self updateContentRect];
+            });
         }
     }
 }
