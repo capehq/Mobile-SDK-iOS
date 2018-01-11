@@ -426,7 +426,7 @@ static VideoPreviewer* previewer = nil;
     if(_decodeThread == nil && !_status.isRunning)
     {
         _decodeThread = [[NSThread alloc] initWithTarget:self selector:@selector(decodeRunloop) object:nil];
-        _decodeThread.qualityOfService = NSQualityOfServiceUserInteractive;
+        _decodeThread.qualityOfService = NSQualityOfServiceUserInitiated;
         [_decodeThread start];
     }
     END_DISPATCH_QUEUE
