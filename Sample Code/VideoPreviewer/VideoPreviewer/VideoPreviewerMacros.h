@@ -23,6 +23,13 @@ if(__strong##__TARGET__==nil)return;
 
 #define SAFE_BLOCK(block, ...) if(block){block(__VA_ARGS__);}
 
-#define DJILOG(fmt, ...)
+#define DEBUGLOG(string) if(VideoPreviewer.debugLog){VideoPreviewer.debugLog(string);}
+#define INFOLOG(string) if(VideoPreviewer.infoLog){VideoPreviewer.infoLog(string);}
+#define ERRORLOG(string) if(VideoPreviewer.errorLog){VideoPreviewer.errorLog(string);}
+
+#define STRINGIFY(fmt, ...) [NSString stringWithFormat:fmt, ##__VA_ARGS__]
+#define DJILOG(fmt, ...)  DEBUGLOG(STRINGIFY(fmt, ##__VA_ARGS__))
+#define INFO(fmt, ...)  INFOLOG(STRINGIFY(fmt, ##__VA_ARGS__))
+#define ERROR(fmt, ...)  ERRORLOG(STRINGIFY(fmt, ##__VA_ARGS__))
 
 #endif /* VideoPreviewerMacros_h */

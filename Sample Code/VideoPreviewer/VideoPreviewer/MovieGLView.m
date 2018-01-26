@@ -25,13 +25,12 @@
 #include <pthread.h>
 
 // SDK
+#import "VideoPreviewer.h"
 #import "VideoPreviewerMacros.h"
 
 #define THUMBNAIL_IMAGE_WIDTH (320)
 #define THUMBNAIL_IMAGE_HIGHT (180)
 
-#define INFO(fmt, ...) //DJILog(@"[GLView]"fmt, ##__VA_ARGS__)
-#define ERROR(fmt, ...) //DJILog(@"[GLView]"fmt, ##__VA_ARGS__)
 //////////////////////////////////////////////////////////
 
 #pragma mark - shaders
@@ -515,7 +514,7 @@ NSString *const renderToScreenFS = SHADER_STRING
     //update frame
     if (frame){
         if(frame->width > 2000 || frame->height > 2000){
-            ERROR(@"size error %f %f", frame->width, frame->height);
+            ERROR(@"size error %d %d", frame->width, frame->height);
             [self.renderLock unlock];
             return;
         }

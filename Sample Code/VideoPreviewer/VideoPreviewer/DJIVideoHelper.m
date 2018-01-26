@@ -5,9 +5,8 @@
 //
 
 #import "DJIVideoHelper.h"
-
-#define INFO(fmt, ...) //NSLog(fmt, ##__VA_ARGS__)
-#define ERROR(fmt, ...) //NSLog(fmt, ##__VA_ARGS__)
+#import "VideoPreviewer.h"
+#import "VideoPreviewerMacros.h"
 
 loadPrebuildIframeOverridePtr g_loadPrebuildIframeOverrideFunc = nil;
 loadPrebuildIframePathPtr g_loadPrebuildIframePathFunc = nil;

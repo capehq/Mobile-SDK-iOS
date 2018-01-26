@@ -72,17 +72,24 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /*
  * create a new preview, this instance is not the default one
  */
--(instancetype) init;
+-(instancetype _Nonnull ) init;
+-(instancetype _Nonnull ) initWithQueueSize:(int)queueSize;
 
 /**
  *  Push video data
  */
--(void) push:(uint8_t*)videoData length:(int)len;
+-(void) push:(uint8_t*_Nonnull)videoData length:(int)len;
 
 /**
  *  Clear video data buffer
  */
 -(void) clearVideoData;
+
+/** Logging */
+typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
+@property (class, strong) LogFunc debugLog;
+@property (class, strong) LogFunc infoLog;
+@property (class, strong) LogFunc errorLog;
 
 @end
 
@@ -98,7 +105,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /**
  *  get default previewer
  */
-+(VideoPreviewer*) instance;
++(VideoPreviewer*_Nullable) instance;
 
 // SDK
 /**
@@ -119,7 +126,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /*
  * for internal use only
  */
-@property (nonatomic, readonly) MovieGLView* internalGLView;
+@property (nonatomic, readonly) MovieGLView* _Nullable internalGLView;
 @end
 
 @interface VideoPreviewer ()
@@ -150,7 +157,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
  *
  *  @return `YES` if it is set successfully.
  */
-- (BOOL)setView:(UIView *)view;
+- (BOOL)setView:(UIView *_Nullable)view;
 
 /**
  *  Unset the view which is set previously.
@@ -169,7 +176,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
  *  @param view the instance of the UIView.
  *  @return the location of point in the video stream coordinate
  */
--(CGPoint) convertPoint:(CGPoint)point toVideoViewFromView:(UIView*)view;
+-(CGPoint) convertPoint:(CGPoint)point toVideoViewFromView:(UIView*_Nullable)view;
 
 /**
  *  Convert a point on from the video stream coordinate to the coordinate system
@@ -179,7 +186,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
  *  @param view the instance of the UIView.
  *  @return the location of point in the UIView
  */
--(CGPoint) convertPoint:(CGPoint)point fromVideoViewToView:(UIView *)view;
+-(CGPoint) convertPoint:(CGPoint)point fromVideoViewToView:(UIView *_Nullable)view;
 
 @end
 
@@ -277,12 +284,12 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /**
  *  Screen capture of the current view
  */
--(void) snapshotPreview:(void(^)(UIImage* snapshot))block;
+-(void) snapshotPreview:(void(^_Nullable)(UIImage* _Nullable snapshot))block;
 
 /**
  *  Screen capture thumbnail
  */
--(void) snapshotThumnnail:(void(^)(UIImage* snapshot))block;
+-(void) snapshotThumnnail:(void(^_Nullable)(UIImage* _Nullable snapshot))block;
 
 @end
 
@@ -293,22 +300,22 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /**
  *  @param processor Processor registered to receive the H264 stream data.
  */
--(void) registStreamProcessor:(id<VideoStreamProcessor>)processor;
+-(void) registStreamProcessor:(id<VideoStreamProcessor> _Nullable )processor;
 
 /**
  *  @param processor Remove registered processor list.
  */
--(void) unregistStreamProcessor:(id)processor;
+-(void) unregistStreamProcessor:(id _Nullable )processor;
 
 /*
  *  @param processor Processor registered to receive the VideoFrameYUV frame data.
  */
--(void) registFrameProcessor:(id<VideoFrameProcessor>)processor;
+-(void) registFrameProcessor:(id <VideoFrameProcessor> _Nullable )processor;
 
 /**
  *  @param processor Remove registered processor list.
  */
--(void) unregistFrameProcessor:(id)processor;
+-(void) unregistFrameProcessor:(id _Nullable )processor;
 
 @end
 
@@ -364,7 +371,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 @property(readwrite, nonatomic) CGFloat highlightsDecrease;
 
 // -----------------------Cape added-----------------------
-@property(weak, nonatomic) id<DecompressedFrameDelegate> delegate;
+@property(weak, nonatomic) id <DecompressedFrameDelegate> _Nullable delegate;
 // -----------------------Cape added-----------------------
 
 @end
@@ -374,5 +381,6 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 ///////////////// delay the decode and smooth config ///////////////////////////
 
 @interface VideoPreviewer ()
-@property (nonatomic, strong) id<DJISmoothDecodeProtocol> smoothDecode;
+@property (nonatomic, strong) id <DJISmoothDecodeProtocol> _Nullable smoothDecode;
 @end
+
