@@ -25,7 +25,7 @@
 #include <pthread.h>
 
 // SDK
-#import "VideoPreviewer.h"
+#import "VideoPreviewerLogging.h"
 #import "VideoPreviewerMacros.h"
 
 #define THUMBNAIL_IMAGE_WIDTH (320)

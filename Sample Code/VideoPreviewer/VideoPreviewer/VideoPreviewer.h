@@ -19,6 +19,8 @@
 #import "DJIRTPlayerRenderView.h"
 #import "DJIVTH264DecoderIFrameData.h"
 
+#import "VideoPreviewerLogging.h"
+
 #define __WAIT_STEP_FRAME__   (0) //单步调试用，搭配test_queue_pull
 
 #define VIDEO_PREVIEWER_DISPATCH "video_preview_create_thread_dispatcher"
@@ -72,24 +74,18 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
 /*
  * create a new preview, this instance is not the default one
  */
--(instancetype _Nonnull ) init;
--(instancetype _Nonnull ) initWithQueueSize:(int)queueSize;
+-(instancetype) init;
+-(instancetype) initWithQueueSize:(int)queueSize;
 
 /**
  *  Push video data
  */
--(void) push:(uint8_t*_Nonnull)videoData length:(int)len;
+-(void) push:(uint8_t*)videoData length:(int)len;
 
 /**
  *  Clear video data buffer
  */
 -(void) clearVideoData;
-
-/** Logging */
-typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
-@property (class, strong) LogFunc debugLog;
-@property (class, strong) LogFunc infoLog;
-@property (class, strong) LogFunc errorLog;
 
 @end
 
@@ -105,7 +101,7 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
 /**
  *  get default previewer
  */
-+(VideoPreviewer*_Nullable) instance;
++(VideoPreviewer*) instance;
 
 // SDK
 /**
@@ -126,7 +122,7 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
 /*
  * for internal use only
  */
-@property (nonatomic, readonly) MovieGLView* _Nullable internalGLView;
+@property (nonatomic, readonly) MovieGLView* internalGLView;
 @end
 
 @interface VideoPreviewer ()
@@ -157,7 +153,7 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
  *
  *  @return `YES` if it is set successfully.
  */
-- (BOOL)setView:(UIView *_Nullable)view;
+- (BOOL)setView:(UIView *)view;
 
 /**
  *  Unset the view which is set previously.
@@ -176,7 +172,7 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
  *  @param view the instance of the UIView.
  *  @return the location of point in the video stream coordinate
  */
--(CGPoint) convertPoint:(CGPoint)point toVideoViewFromView:(UIView*_Nullable)view;
+-(CGPoint) convertPoint:(CGPoint)point toVideoViewFromView:(UIView*)view;
 
 /**
  *  Convert a point on from the video stream coordinate to the coordinate system
@@ -186,7 +182,7 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
  *  @param view the instance of the UIView.
  *  @return the location of point in the UIView
  */
--(CGPoint) convertPoint:(CGPoint)point fromVideoViewToView:(UIView *_Nullable)view;
+-(CGPoint) convertPoint:(CGPoint)point fromVideoViewToView:(UIView *)view;
 
 @end
 
@@ -284,12 +280,12 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
 /**
  *  Screen capture of the current view
  */
--(void) snapshotPreview:(void(^_Nullable)(UIImage* _Nullable snapshot))block;
+-(void) snapshotPreview:(void(^)(UIImage* snapshot))block;
 
 /**
  *  Screen capture thumbnail
  */
--(void) snapshotThumnnail:(void(^_Nullable)(UIImage* _Nullable snapshot))block;
+-(void) snapshotThumnnail:(void(^)(UIImage* snapshot))block;
 
 @end
 
@@ -300,22 +296,22 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
 /**
  *  @param processor Processor registered to receive the H264 stream data.
  */
--(void) registStreamProcessor:(id<VideoStreamProcessor> _Nullable )processor;
+-(void) registStreamProcessor:(id<VideoStreamProcessor>)processor;
 
 /**
  *  @param processor Remove registered processor list.
  */
--(void) unregistStreamProcessor:(id _Nullable )processor;
+-(void) unregistStreamProcessor:(id)processor;
 
 /*
  *  @param processor Processor registered to receive the VideoFrameYUV frame data.
  */
--(void) registFrameProcessor:(id <VideoFrameProcessor> _Nullable )processor;
+-(void) registFrameProcessor:(id<VideoFrameProcessor>)processor;
 
 /**
  *  @param processor Remove registered processor list.
  */
--(void) unregistFrameProcessor:(id _Nullable )processor;
+-(void) unregistFrameProcessor:(id)processor;
 
 @end
 
@@ -371,7 +367,7 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
 @property(readwrite, nonatomic) CGFloat highlightsDecrease;
 
 // -----------------------Cape added-----------------------
-@property(weak, nonatomic) id <DecompressedFrameDelegate> _Nullable delegate;
+@property(weak, nonatomic) id<DecompressedFrameDelegate> delegate;
 // -----------------------Cape added-----------------------
 
 @end
@@ -381,6 +377,5 @@ typedef void (^ _Nullable LogFunc)(NSString * _Nonnull fmt);
 ///////////////// delay the decode and smooth config ///////////////////////////
 
 @interface VideoPreviewer ()
-@property (nonatomic, strong) id <DJISmoothDecodeProtocol> _Nullable smoothDecode;
+@property (nonatomic, strong) id<DJISmoothDecodeProtocol> smoothDecode;
 @end
-

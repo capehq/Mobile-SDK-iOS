@@ -7,8 +7,7 @@
 #import <UIKit/UIKit.h>
 #import "H264VTDecode.h"
 #import "DJIVideoHelper.h"
-#import "VideoPreviewer.h"
-#import "VideoPreviewerMacros.h"
+#import "VideoPreviewerLogging.h"
 
 #define DEFAULT_STREAM_FPS (30)
 #define FRAME_MAX_SLICE_COUNT (30)

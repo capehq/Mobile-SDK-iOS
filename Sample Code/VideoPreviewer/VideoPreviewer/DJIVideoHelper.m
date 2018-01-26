@@ -5,8 +5,7 @@
 //
 
 #import "DJIVideoHelper.h"
-#import "VideoPreviewer.h"
-#import "VideoPreviewerMacros.h"
+#import "VideoPreviewerLogging.h"
 
 loadPrebuildIframeOverridePtr g_loadPrebuildIframeOverrideFunc = nil;
 loadPrebuildIframePathPtr g_loadPrebuildIframePathFunc = nil;

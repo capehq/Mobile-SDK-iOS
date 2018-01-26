@@ -19,6 +19,8 @@
 
 //SDK
 #import "VideoPreviewerMacros.h"
+#import "VideoPreviewerLogging.h"
+
 #include <libavutil/log.h>
 
 #define __TEST_VIDEO_DELAY__  (0)
@@ -274,17 +276,6 @@ static VideoPreviewer* previewer = nil;
         previewer = nil;
     }
 }
-
-static LogFunc _debugLog;
-+ (LogFunc) debugLog { return _debugLog; }
-+ (void)setDebugLog:(LogFunc)newFunc { _debugLog = newFunc;}
-static LogFunc _infoLog;
-+ (LogFunc) infoLog { return _infoLog; }
-+ (void)setInfoLog:(LogFunc)newFunc { _infoLog = newFunc; }
-static LogFunc _errorLog;
-+ (LogFunc) errorLog { return _errorLog; }
-+ (void)setErrorLog:(LogFunc)newFunc { _errorLog = newFunc; }
-
 
 -(void) push:(uint8_t*)videoData length:(int)len
 {
