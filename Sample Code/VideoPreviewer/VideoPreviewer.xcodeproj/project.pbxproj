@@ -14,6 +14,8 @@
 		02EE504A1C3D9BC3006783E5 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EE50491C3D9BC3006783E5 /* CoreMedia.framework */; };
 		02EE504C1C3D9F36006783E5 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EE504B1C3D9F36006783E5 /* VideoToolbox.framework */; };
 		02EE50651C3DA525006783E5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EE50641C3DA525006783E5 /* libz.tbd */; };
+		1D69F553201ABEBC00DDDA90 /* VideoPreviewerLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D69F552201ABEBC00DDDA90 /* VideoPreviewerLogging.m */; };
+		1D69F555201ABEDB00DDDA90 /* VideoPreviewerLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D69F554201ABEDB00DDDA90 /* VideoPreviewerLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AB30C041E64038E00107706 /* VideoPreviewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB30C021E64038E00107706 /* VideoPreviewer.m */; };
 		9AB30C051E64038E00107706 /* VideoPreviewer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB30C031E64038E00107706 /* VideoPreviewer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AC273611E54473800DFBE85 /* DJIRTPlayerRenderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AC2735D1E54473800DFBE85 /* DJIRTPlayerRenderView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -188,6 +190,8 @@
 		02EE50491C3D9BC3006783E5 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		02EE504B1C3D9F36006783E5 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		02EE50641C3DA525006783E5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		1D69F552201ABEBC00DDDA90 /* VideoPreviewerLogging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VideoPreviewerLogging.m; path = VideoPreviewer/VideoPreviewerLogging.m; sourceTree = "<group>"; };
+		1D69F554201ABEDB00DDDA90 /* VideoPreviewerLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoPreviewerLogging.h; path = VideoPreviewer/VideoPreviewerLogging.h; sourceTree = "<group>"; };
 		9AB30C021E64038E00107706 /* VideoPreviewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoPreviewer.m; path = VideoPreviewer/VideoPreviewer.m; sourceTree = "<group>"; };
 		9AB30C031E64038E00107706 /* VideoPreviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoPreviewer.h; path = VideoPreviewer/VideoPreviewer.h; sourceTree = "<group>"; };
 		9AC2735D1E54473800DFBE85 /* DJIRTPlayerRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJIRTPlayerRenderView.h; sourceTree = "<group>"; };
@@ -408,6 +412,8 @@
 				02EE4FD51C3D9B55006783E5 /* VideoFrameExtractor.h */,
 				02EE4FD61C3D9B55006783E5 /* VideoFrameExtractor.m */,
 				B83DC24B1D8FB298003461D3 /* VideoPreviewerMacros.h */,
+				1D69F554201ABEDB00DDDA90 /* VideoPreviewerLogging.h */,
+				1D69F552201ABEBC00DDDA90 /* VideoPreviewerLogging.m */,
 				9AB30C031E64038E00107706 /* VideoPreviewer.h */,
 				9AB30C021E64038E00107706 /* VideoPreviewer.m */,
 				02EE4FD21C3D9B55006783E5 /* Info.plist */,
@@ -822,6 +828,7 @@
 				9AC2747B1E544E7700DFBE85 /* DJIVideoPresentViewAdjustHelper.h in Headers */,
 				9AC274281E544E7700DFBE85 /* buffersink.h in Headers */,
 				9AC274231E544E7700DFBE85 /* version.h in Headers */,
+				1D69F555201ABEDB00DDDA90 /* VideoPreviewerLogging.h in Headers */,
 				9AC2749B1E544E7700DFBE85 /* DJILiveViewRenderTexture.h in Headers */,
 				9AC2744C1E544E7700DFBE85 /* hash.h in Headers */,
 				9AC274491E544E7700DFBE85 /* fifo.h in Headers */,
@@ -1028,6 +1035,7 @@
 				02EE50441C3D9B5B006783E5 /* MovieGLView.m in Sources */,
 				B82355351FA8C64500500A27 /* LB2AUDRemoveParser.m in Sources */,
 				9AC273691E5448AE00DFBE85 /* DJIRTPlayerRenderView.m in Sources */,
+				1D69F553201ABEBC00DDDA90 /* VideoPreviewerLogging.m in Sources */,
 				9AC2748A1E544E7700DFBE85 /* DJILiveViewRenderProgram.m in Sources */,
 				9AC2749A1E544E7700DFBE85 /* DJILiveViewRenderFocusWarningFilter.m in Sources */,
 				B82893321C9867AB00CCBD3B /* VideoPreviewerQueue.m in Sources */,

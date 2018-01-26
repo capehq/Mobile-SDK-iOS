@@ -19,6 +19,8 @@
 #import "DJIRTPlayerRenderView.h"
 #import "DJIVTH264DecoderIFrameData.h"
 
+#import "VideoPreviewerLogging.h"
+
 #define __WAIT_STEP_FRAME__   (0) //单步调试用，搭配test_queue_pull
 
 #define VIDEO_PREVIEWER_DISPATCH "video_preview_create_thread_dispatcher"
@@ -73,6 +75,7 @@ typedef NS_ENUM(NSUInteger, VideoPreviewerType){
  * create a new preview, this instance is not the default one
  */
 -(instancetype) init;
+-(instancetype) initWithQueueSize:(int)queueSize;
 
 /**
  *  Push video data

@@ -7,10 +7,7 @@
 #import <UIKit/UIKit.h>
 #import "H264VTDecode.h"
 #import "DJIVideoHelper.h"
-//#import "DJILogCenter.h"
-
-#define INFO(fmt, ...) //DJILog(@"[VTDecoder]"fmt, ##__VA_ARGS__)
-#define ERROR(fmt, ...) //DJILog(@"[VTDecoder]"fmt, ##__VA_ARGS__)
+#import "VideoPreviewerLogging.h"
 
 #define DEFAULT_STREAM_FPS (30)
 #define FRAME_MAX_SLICE_COUNT (30)

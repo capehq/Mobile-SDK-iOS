@@ -19,6 +19,8 @@
 
 //SDK
 #import "VideoPreviewerMacros.h"
+#import "VideoPreviewerLogging.h"
+
 #include <libavutil/log.h>
 
 #define __TEST_VIDEO_DELAY__  (0)
@@ -136,7 +138,13 @@ LB2AUDRemoveParserDelegate>{
 
 @implementation VideoPreviewer
 
+
 -(id)init
+{
+    return [self initWithQueueSize:100];
+}
+
+-(id)initWithQueueSize:(int)queueSize
 {
     self= [super init];
 
@@ -150,7 +158,8 @@ LB2AUDRemoveParserDelegate>{
     _decoderStatus         = VideoDecoderStatus_Normal;
 
     // SDK Changes
-    _dataQueue             = [[VideoPreviewerQueue alloc] initWithSize:100];
+    DJILOG(@"init with queue size %d", queueSize);
+    _dataQueue             = [[VideoPreviewerQueue alloc] initWithSize:queueSize];
 
     _stream_processor_list = [[NSMutableArray alloc] init];
     _frame_processor_list  = [[NSMutableArray alloc] init];
@@ -312,8 +321,8 @@ static VideoPreviewer* previewer = nil;
                     return;
                 }
 
-                if (self.dataQueue.count > FRAME_DROP_THRESHOLD) {
-                    DJILOG(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD);
+                if (self.dataQueue.count > FRAME_DROP_THRESHOLD * self.dataQueue.size / 100) {
+                    INFO(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD * self.dataQueue.size / 100);
                     [self.dataQueue clear];
                     [self.smoothDecode resetSmooth];
                 }
@@ -1102,8 +1111,8 @@ static VideoPreviewer* previewer = nil;
             return;
         }
 
-        if (self.dataQueue.count > FRAME_DROP_THRESHOLD) {
-            DJILOG(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD);
+        if (self.dataQueue.count > FRAME_DROP_THRESHOLD * self.dataQueue.size / 100) {
+            INFO(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD * self.dataQueue.size / 100);
             [self.smoothDecode resetSmooth];
             [self.dataQueue clear];
         }

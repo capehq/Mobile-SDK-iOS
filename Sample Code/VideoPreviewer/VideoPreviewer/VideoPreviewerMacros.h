@@ -23,6 +23,4 @@ if(__strong##__TARGET__==nil)return;
 
 #define SAFE_BLOCK(block, ...) if(block){block(__VA_ARGS__);}
 
-#define DJILOG(fmt, ...)
-
 #endif /* VideoPreviewerMacros_h */
