@@ -321,8 +321,8 @@ static VideoPreviewer* previewer = nil;
                     return;
                 }
 
-                if (self.dataQueue.count > FRAME_DROP_THRESHOLD) {
-                    INFO(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD);
+                if (self.dataQueue.count > FRAME_DROP_THRESHOLD * self.dataQueue.size / 100) {
+                    INFO(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD * self.dataQueue.size / 100);
                     [self.dataQueue clear];
                     [self.smoothDecode resetSmooth];
                 }
@@ -1111,8 +1111,8 @@ static VideoPreviewer* previewer = nil;
             return;
         }
 
-        if (self.dataQueue.count > FRAME_DROP_THRESHOLD) {
-            INFO(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD);
+        if (self.dataQueue.count > FRAME_DROP_THRESHOLD * self.dataQueue.size / 100) {
+            INFO(@"decode dataqueue drop %d", FRAME_DROP_THRESHOLD * self.dataQueue.size / 100);
             [self.smoothDecode resetSmooth];
             [self.dataQueue clear];
         }
