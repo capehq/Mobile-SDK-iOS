@@ -211,7 +211,7 @@ void DJIHWDecoderDidDecompress( void *decompressionOutputRefCon, void *sourceFra
         void* props[] = {sps_buffer, pps_buffer};
         size_t sizes[] = {sps_size, pps_size};
         [self safeReleaseDecodeSession];
-        INFO(@"old session released\n");
+        DJILOG(@"old session released");
         
         // Analyze sps and save information for the verification of slice header.
         if (-1 == h264_decode_seq_parameter_set_out(sps_buffer, sps_size, &_sps_w, &_sps_h, &_sps_fps, &_currentSPS)
@@ -290,7 +290,7 @@ void DJIHWDecoderDidDecompress( void *decompressionOutputRefCon, void *sourceFra
         callBackRecord.decompressionOutputCallback = DJIHWDecoderDidDecompress;
         callBackRecord.decompressionOutputRefCon = (__bridge void *)self;
        
-        INFO(@"begin create decompress session\n");
+        DJILOG(@"begin create decompress session");
         NSDate* startCreateSession = [NSDate date];
         OSStatus session_ret = VTDecompressionSessionCreate(kCFAllocatorDefault, _formatDesc, NULL, destinationPixelBufferAttributes, &callBackRecord, &_sessionRef);
         double duration = -[startCreateSession timeIntervalSinceNow];
@@ -322,7 +322,7 @@ void DJIHWDecoderDidDecompress( void *decompressionOutputRefCon, void *sourceFra
             return 0;
         }
         else{
-            ERROR(@"create decode session %d", _decoder_create_count);
+            DJILOG(@"create decode session %d", _decoder_create_count);
             hw_decoder_create_fail_count = 0;
             _decoder_create_count++;
         }
@@ -384,7 +384,7 @@ void DJIHWDecoderDidDecompress( void *decompressionOutputRefCon, void *sourceFra
     au_size = 0;
     au_nal_count = 0;
     if (push_ret == 0) {
-        ERROR(@"push iframe success");
+        DJILOG(@"push iframe success");
         
         if (_encoderType == H264EncoderType_A9_phantom3c
             || _encoderType == H264EncoderType_A9_phantom3s) {
