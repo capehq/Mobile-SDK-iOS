@@ -624,6 +624,12 @@ static VideoPreviewer* previewer = nil;
 
     _encoderType = encoderType;
     _stream_basic_info.encoderType = encoderType;
+
+    if (_encoderType == H264EncoderType_MavicAir) {
+        self.pocBufferSize = 2;
+    } else {
+        self.pocBufferSize = 0;
+    }
 }
 
 -(void) setEnableShadowAndHighLightenhancement:(BOOL)enable{
