@@ -30,4 +30,8 @@
 // For Mavic 2
 -(void)setupFrameControlHandler;
 
+// ------------- Cape added ---------------------------
+-(void)setIsForLightbridge2;
+// ----------------------------------------------------
+
 @end

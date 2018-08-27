@@ -96,6 +96,10 @@ const static NSTimeInterval REFRESH_INTERVAL = 1.0;
     }
 }
 
+// ------------- Cape added ---------------------------
+-(void)setIsForLightbridge2 { self.isForLightbridge2 = true; }
+// ----------------------------------------------------
+
 -(void)startRefreshTimer {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (!self.refreshTimer) {
