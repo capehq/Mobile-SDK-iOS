@@ -93,4 +93,6 @@
  */
 -(uint32_t) popNextFrameUUID;
 
+-(CVPixelBufferRef)getCVImage;
+
 @end

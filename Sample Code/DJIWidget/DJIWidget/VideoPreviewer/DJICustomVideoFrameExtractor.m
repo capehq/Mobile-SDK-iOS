@@ -214,6 +214,55 @@ ss += ll; \
 	pthread_mutex_unlock(&_frameMutex);
 }
 
+-(CVPixelBufferRef)getCVImage {
+    pthread_mutex_lock(&_frameMutex);
+    CVPixelBufferRef pixbuffer = NULL;
+    do {
+        if (!_pFrame) break;
+        
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 @YES, kCVPixelBufferCGImageCompatibilityKey,
+                                 @YES, kCVPixelBufferCGBitmapContextCompatibilityKey, nil];
+        CVReturn create_status = CVPixelBufferCreate(kCFAllocatorDefault,
+                                                     _pFrame->width,
+                                                     _pFrame->height,
+                                                     kCVPixelFormatType_420YpCbCr8Planar,
+                                                     (__bridge CFDictionaryRef) options,
+                                                     &pixbuffer);
+        
+        if (kCVReturnSuccess != create_status) {
+            break;
+        }
+        
+        if (kCVReturnSuccess != CVPixelBufferLockBaseAddress(pixbuffer, 0)) {
+            CFRelease(pixbuffer);
+            pixbuffer = NULL;
+            break;
+        }
+        
+        uint8_t* luma = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(pixbuffer, 0);
+        uint8_t* chromaB = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(pixbuffer, 1);
+        uint8_t* chromaR = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(pixbuffer, 2);
+        
+        if (!luma || !chromaB || !chromaR) {
+            CFRelease(pixbuffer);
+            pixbuffer = NULL;
+            break;
+        }
+        
+        //copy yuv data
+        _CP_YUV_FRAME_(luma, _pFrame->data[0], _pFrame->linesize[0], _pCodecCtx->width, _pCodecCtx->height);
+        _CP_YUV_FRAME_(chromaB, _pFrame->data[1], _pFrame->linesize[1], _pCodecCtx->width/2, _pCodecCtx->height/2);
+        _CP_YUV_FRAME_(chromaR, _pFrame->data[2], _pFrame->linesize[2], _pCodecCtx->width/2, _pCodecCtx->height/2);
+        
+        CVPixelBufferUnlockBaseAddress(pixbuffer, 0);
+
+    } while (FALSE);
+    pthread_mutex_unlock(&_frameMutex);
+    
+    return pixbuffer;
+}
+
 #undef _CP_YUV_FRAME_
 
 -(void) privateParseVideo:(uint8_t*)buf length:(int)length withOutputBlock:(void (^)(AVPacket* frame))block

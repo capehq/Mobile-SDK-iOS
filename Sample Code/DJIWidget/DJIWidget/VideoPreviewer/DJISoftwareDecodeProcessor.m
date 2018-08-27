@@ -71,6 +71,15 @@
             
             _decodeFrameIndex = (++_decodeFrameIndex)%RENDER_FRAME_NUMBER;
             
+            // -----------------------Cape added-----------------------
+            if (self.delegate) {
+                CVImageBufferRef image = [weakself.extractor getCVImage];
+                if (image) {
+                    [self.delegate didReceiveDecompressedFrame:image];
+                    CFRelease(image);
+                }
+            }
+            // --------------------------------------------------------
         }
         else{
             decodeSuccess = NO;
