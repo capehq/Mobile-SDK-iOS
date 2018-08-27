@@ -420,6 +420,10 @@ typedef NS_ENUM(NSUInteger, DJIVideoPreviewerType){
  */
 @property(readwrite, nonatomic) CGFloat highlightsDecrease;
 
+// -----------------------Cape added-----------------------
+@property(weak, nonatomic) id<DecompressedFrameDelegate> delegate;
+// -----------------------Cape added-----------------------
+
 @end
 
 

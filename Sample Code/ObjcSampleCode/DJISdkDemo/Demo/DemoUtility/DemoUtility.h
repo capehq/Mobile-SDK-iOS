@@ -12,14 +12,14 @@
 
 #import "DemoUtilityMacro.h"
 #import "DemoUtilityMethod.h"
-#import "DemoAlertView.h"
+//#import "DemoAlertView.h"
 #import "DemoComponentHelper.h"
-#import "DemoGetSetViewController.h"
-#import "DemoPushInfoViewController.h"
-#import "DemoSettingItem.h"
-#import "DemoTableViewController.h"
-#import "MBProgressHUD.h"
-#import "DemoScrollView.h"
+//#import "DemoGetSetViewController.h"
+//#import "DemoPushInfoViewController.h"
+//#import "DemoSettingItem.h"
+//#import "DemoTableViewController.h"
+//#import "MBProgressHUD.h"
+//#import "DemoScrollView.h"
 #import "DemoXT2Helper.h"
 
 #endif /* DemoUtility_h */

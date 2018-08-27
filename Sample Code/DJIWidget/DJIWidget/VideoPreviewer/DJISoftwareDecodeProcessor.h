@@ -11,6 +11,7 @@
 @interface DJISoftwareDecodeProcessor : NSObject <VideoStreamProcessor>
 @property (nonatomic, weak) id<VideoFrameProcessor> frameProcessor;
 @property (nonatomic, assign) BOOL enabled;
+@property (nonatomic, weak) id<DecompressedFrameDelegate> delegate;
 
 -(id) initWithExtractor:(DJICustomVideoFrameExtractor*)extractor;
 @end
